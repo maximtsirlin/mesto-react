@@ -2,26 +2,72 @@ import React, { useState } from 'react';
 import Header from './Header';
 import Main from './Main';
 import Footer from './Footer';
+import EditProfie from './EditProfile';
+import EditAvatar from './EditAvatar';
+import AddPlace from './AddPlace';
+
+
+
 
 
 function App() {
+
+  const [isEditProfilePopupOpen, setEditProfilePopupOpen] = useState(false);
+  const [isAddPlacePopupOpen, setAddPlacePopupOpen] = useState(false);
+  const [isEditAvatarPopupOpen, setEditAvatarPopupOpen] = useState(false);
+
+  const handleEditProfileClick = () => setEditProfilePopupOpen(true);
+  const handleAddPlaceClick = () => setAddPlacePopupOpen(true); //кнопка добавения карточки
+  const handleEditAvatarClick = () => setEditAvatarPopupOpen(true);
+
+  const closeAllPopups = () => {
+    setEditProfilePopupOpen(false);
+    setAddPlacePopupOpen(false);
+    setEditAvatarPopupOpen(false);
+  };
+
+
+
+
   return (
 
-    
+
     <div className="App">
-       
-      
-    <body class="root">
-  <div class="page">
-    
-    <Header />
-    <Main />
-
-    <Footer />
 
 
-    <main class="content">
-      {/* <section class="profile">
+      <body class="root">
+        <div class="page">
+
+          <Header />
+          <Main
+            onEditProfile={handleEditProfileClick}
+            onEditAvatar={handleEditAvatarClick}
+            onAddPlace={handleAddPlaceClick}
+          />
+
+          <Footer />
+
+
+          <EditProfie
+            isOpen={isEditProfilePopupOpen}
+            onClose={closeAllPopups}
+          />
+
+
+          <AddPlace
+            isOpen={isAddPlacePopupOpen}
+            onClose={closeAllPopups}
+          />
+
+
+          <EditAvatar
+            isOpen={isEditAvatarPopupOpen}
+            onClose={closeAllPopups}
+          />
+
+
+          <main class="content">
+            {/* <section class="profile">
         <div class="profile__image-overlay"></div>
         <img src="<%=require('./images/image.jpg')%>" alt="Жак-Ив Кусто аватар" class="profile__image"/>
         <div class="profile__item">
@@ -35,109 +81,109 @@ function App() {
         <button class="profile__add-button" type="button" aria-label="кнопка"></button>
       </section> */}
 
-      <div id="app"></div>
+            <div id="app"></div>
 
-      <template id="cards__template">
-        <li class="cards__cell">
-          <img src="./images/kamchatka.png" alt="Камчатка вулкан" class="cards__item"/>
-          <button class="cards__delete" type="button"></button>
-          <div class="cards__form">
-            <h2 class="cards__description"></h2>
-            <div>
-              <button class="cards__button" type="button" aria-label="Камчатка лайк"></button>
-              <p class="cards__like-counter">0</p>
-            </div>
-          </div>
-        </li>
-      </template>
+            <template id="cards__template">
+              <li class="cards__cell">
+                <img src="./images/kamchatka.png" alt="Камчатка вулкан" class="cards__item" />
+                <button class="cards__delete" type="button"></button>
+                <div class="cards__form">
+                  <h2 class="cards__description"></h2>
+                  <div>
+                    <button class="cards__button" type="button" aria-label="Камчатка лайк"></button>
+                    <p class="cards__like-counter">0</p>
+                  </div>
+                </div>
+              </li>
+            </template>
 
-      <section class="cards">
-      </section>
+            <section class="cards">
+            </section>
 
-    </main>
-    {/* <footer class="footer">
+          </main>
+          {/* <footer class="footer">
       <p class="footer__copyright">© 2020 Mesto Russia</p>
     </footer> */}
 
-    <div class="popup popup_edit">
-      <div class="popup__container">
-        <button class="popup__close" type="button"></button>
-        <h2 class="popup__header">Редактировать профиль</h2>
-        <form id="profileEditForm" class="form" name="form">
-          <div class="form__section">
-            <input type="text" name="name" class="form__input form__input_name" required minlength="2" maxlength="40"/>
-            <div class="form__input-error form__input-error_active" id="name"></div>
+          <div class="popup popup_edit">
+            <div class="popup__container">
+              <button class="popup__close" type="button"></button>
+              <h2 class="popup__header">Редактировать профиль</h2>
+              <form id="profileEditForm" class="form" name="form">
+                <div class="form__section">
+                  <input type="text" name="name" class="form__input form__input_name" required minlength="2" maxlength="40" />
+                  <div class="form__input-error form__input-error_active" id="name"></div>
+                </div>
+                <div class="form__section">
+                  <input type="text" name="job" class="form__input form__input_job" required minlength="2" maxlength="40" />
+                  <div class="form__input-error form__input-error_active" id="job"></div>
+                </div>
+                <button class="form__save" type="submit" disabled="true">Сохранить</button>
+              </form>
+            </div>
           </div>
-          <div class="form__section">
-            <input type="text" name="job" class="form__input form__input_job" required minlength="2" maxlength="40"/>
-            <div class="form__input-error form__input-error_active" id="job"></div>
+
+          <div class="popup popup_add">
+            <div class="popup__container">
+              <button class="popup__close" type="button"></button>
+              <h2 class="popup__header">Новое место</h2>
+              <form id="addPlaceForm" class="form" name="form">
+                <div class="form__section">
+                  <input type="text" name="name" placeholder="Название" class="form__input form__input_name" required
+                    minlength="2" maxlength="30" />
+                  <div class="form__input-error form__input-error_active" id="title"></div>
+                </div>
+                <div class="form__section">
+                  <input type="url" name="link" placeholder="Ссылка на картинку" class="form__input form__input_link"
+                    required />
+                  <div class="form__input-error form__input-error_active" id="link"></div>
+                </div>
+                <button class="form__save" type="submit" disabled="true">Создать</button>
+              </form>
+            </div>
           </div>
-          <button class="form__save" type="submit" disabled="true">Сохранить</button>
-        </form>
-      </div>
-    </div>
 
-    <div class="popup popup_add">
-      <div class="popup__container">
-        <button class="popup__close" type="button"></button>
-        <h2 class="popup__header">Новое место</h2>
-        <form id="addPlaceForm" class="form" name="form">
-          <div class="form__section">
-            <input type="text" name="name" placeholder="Название" class="form__input form__input_name" required
-              minlength="2" maxlength="30"/>
-            <div class="form__input-error form__input-error_active" id="title"></div>
+          <div class="popup popup_confirm">
+            <div class="popup__container">
+              <button class="popup__close" type="button"></button>
+              <h2 class="popup__header">Вы уверены?</h2>
+              <form id="addConfirmForm" class="form" name="form">
+                <div class="form__section">
+                  <button class="form__save" type="submit">Да</button>
+                </div>
+              </form>
+            </div>
           </div>
-          <div class="form__section">
-            <input type="url" name="link" placeholder="Ссылка на картинку" class="form__input form__input_link"
-              required/>
-            <div class="form__input-error form__input-error_active" id="link"></div>
+
+
+          <div class="popup popup_avatar">
+            <div class="popup__container">
+              <button class="popup__close" type="button"></button>
+              <h2 class="popup__header">Обновить аватар</h2>
+              <form id="addAvatar" class="form" name="form">
+                <div class="form__section">
+                  <input type="url" name="link" placeholder="Ссылка на картинку" class="form__input form__input_link"
+                    required />
+                  <div class="form__input-error form__input-error_active" id="confirm"></div>
+                </div>
+                <button class="form__save" type="submit" disabled="true">Сохранить</button>
+              </form>
+            </div>
           </div>
-          <button class="form__save" type="submit" disabled="true">Создать</button>
-        </form>
-      </div>
-    </div>
 
-    <div class="popup popup_confirm">
-      <div class="popup__container">
-        <button class="popup__close" type="button"></button>
-        <h2 class="popup__header">Вы уверены?</h2>
-        <form id="addConfirmForm" class="form" name="form">
-          <div class="form__section">
-            <button class="form__save" type="submit">Да</button>
+
+          <div class="popup popup_image">
+            <div class="popup__image-container">
+              <button class="popup__close popup__close_theme_position" type="button"></button>
+              <figure>
+                <img src="./images/kamchatka.png" alt="Камчатка вулкан" class="popup__img" />
+                <figcaption class="popup__figcaption"></figcaption>
+              </figure>
+            </div>
           </div>
-        </form>
-      </div>
-    </div>
 
-
-    <div class="popup popup_avatar">
-      <div class="popup__container">
-        <button class="popup__close" type="button"></button>
-        <h2 class="popup__header">Обновить аватар</h2>
-        <form id="addAvatar" class="form" name="form">
-          <div class="form__section">
-            <input type="url" name="link" placeholder="Ссылка на картинку" class="form__input form__input_link"
-              required/>
-            <div class="form__input-error form__input-error_active" id="confirm"></div>
-          </div>
-          <button class="form__save" type="submit" disabled="true">Сохранить</button>
-        </form>
-      </div>
-    </div>
-
-
-    <div class="popup popup_image">
-      <div class="popup__image-container">
-        <button class="popup__close popup__close_theme_position" type="button"></button>
-        <figure>
-          <img src="./images/kamchatka.png" alt="Камчатка вулкан" class="popup__img"/>
-          <figcaption class="popup__figcaption"></figcaption>
-        </figure>
-      </div>
-    </div>
-
-  </div>
-</body>
+        </div>
+      </body>
 
 
     </div>

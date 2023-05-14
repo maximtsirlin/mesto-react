@@ -4,13 +4,14 @@ function PopupWithForm(props) {
       <div className={`popup popup_type_${name} ${isOpen ? 'popup_opened' : ''}`}>
         <div className="popup__container">
           <button
-            type="button"
+            type="button"s
             className={`popup__close popup__close_${name}`}
             onClick={onClose}
           ></button>
-          <h2 className="popup__title">{title}</h2>
+          
+          <h2 className="popup__header">{title}</h2>
           <form
-            className={`popup__form popup__form_${name}`}
+            className={`form__section form__section_${name}`}
             action="#"
             method="post"
             name={`${name}-form`}
@@ -18,7 +19,7 @@ function PopupWithForm(props) {
           >
             {children}
             <button
-              className={`popup__button popup__button_${name} popup__button_disabled`}
+              className={`form__save form__save_${name} .form__save_inactive`}
               type="submit"
               disabled
             >
