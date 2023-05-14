@@ -6,9 +6,7 @@ import EditProfie from './EditProfile';
 import EditAvatar from './EditAvatar';
 import AddPlace from './AddPlace';
 
-
-
-
+ 
 
 function App() {
 
@@ -20,11 +18,18 @@ function App() {
   const handleAddPlaceClick = () => setAddPlacePopupOpen(true); //кнопка добавения карточки
   const handleEditAvatarClick = () => setEditAvatarPopupOpen(true);
 
+  const [selectedCard, setSelectedCard] = useState({});
+
   const closeAllPopups = () => {
     setEditProfilePopupOpen(false);
     setAddPlacePopupOpen(false);
     setEditAvatarPopupOpen(false);
   };
+
+  const handleCardClick = (card) => {
+    setSelectedCard(card);
+
+  }
 
 
 
@@ -43,6 +48,7 @@ function App() {
             onEditProfile={handleEditProfileClick}
             onEditAvatar={handleEditAvatarClick}
             onAddPlace={handleAddPlaceClick}
+            onCardClick={handleCardClick}
           />
 
           <Footer />
@@ -65,6 +71,8 @@ function App() {
             onClose={closeAllPopups}
           />
 
+
+      
 
           <main class="content">
             {/* <section class="profile">
