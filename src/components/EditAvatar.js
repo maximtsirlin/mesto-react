@@ -16,9 +16,11 @@ function EditAvatar(props) {
         type="url"
         name="avatar"
         placeholder="Ссылка на фото"
-        autocomplete="off"
+        autoComplete="off"
         minLength="2"
         required
+        defaultValue=""
+
       />
       <span className="form__input-error form__input-error_active"></span>
     </PopupWithForm>

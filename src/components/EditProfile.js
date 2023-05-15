@@ -10,39 +10,40 @@ function EditProfile(props) {
       buttonText={'Сохранить'}
       children={
         <>
-        <form id="profileEditForm">
-          <div className="form__section">
-            <input
-              id="input_element-user"
-              className="form__input form__input_name"
-              type="text"
-              name="name"
-              value=""
-              placeholder="Имя пользователя"
-              minlength="2"
-              maxlength="40"
-              autocomplete="off"
-              required
-            />
-            <span className="form__input-error form__input-error_active"></span>
-          </div>
           
-          <div className="form__section">
-            <input
-              id="input_element-about"
-              className="form__input form__input_job"
-              type="text"
-              name="job"
-              value=""
-              placeholder="О себе"
-              minlength="2"
-              maxlength="200"
-              autocomplete="off"
-              required
-            />
-            <span className="form__input-error form__input-error_active"></span>
-          </div>
-          </form>
+            <div className="form__section">
+              <input
+                id="input_element-user"
+                className="form__input form__input_name"
+                type="text"
+                name="name"
+                placeholder="Имя пользователя"
+                minLength="2"
+                maxLength="40"
+                autoComplete="off"
+                required
+                defaultValue="" 
+
+              />
+              <span className="form__input-error form__input-error_active"></span>
+            </div>
+
+            <div className="form__section">
+              <input
+                id="input_element-about"
+                className="form__input form__input_job"
+                type="text"
+                name="job"
+                placeholder="О себе"
+                minLength="2"
+                maxLength="200"
+                autoComplete="off"
+                required
+                defaultValue="" 
+              />
+              <span className="form__input-error form__input-error_active"></span>
+            </div>
+          
         </>
       }
     />

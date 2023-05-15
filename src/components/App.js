@@ -10,6 +10,10 @@ import ImagePopup from './ImagePopup';
 
 function App() {
 
+  const [firstName, setFirstName] = useState('');
+
+
+
   const [isEditProfilePopupOpen, setEditProfilePopupOpen] = useState(false);
   const [isAddPlacePopupOpen, setAddPlacePopupOpen] = useState(false);
   const [isEditAvatarPopupOpen, setEditAvatarPopupOpen] = useState(false);
@@ -35,11 +39,11 @@ function App() {
   return (
 
 
-    <div className="App">
+    
 
 
-      <body class="root">
-        <div class="page">
+      
+        <div className="page">
 
           <Header />
           <Main
@@ -52,17 +56,16 @@ function App() {
           <Footer />
 
 
+
           <EditProfie
             isOpen={isEditProfilePopupOpen}
             onClose={closeAllPopups}
           />
 
-
           <AddPlace
             isOpen={isAddPlacePopupOpen}
             onClose={closeAllPopups}
           />
-
 
           <EditAvatar
             isOpen={isEditAvatarPopupOpen}
@@ -76,10 +79,10 @@ function App() {
 
 
         </div>
-      </body>
+     
 
 
-    </div>
+   
   );
 }
 
