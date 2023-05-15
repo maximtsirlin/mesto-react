@@ -1,9 +1,11 @@
 .profile {
   display: grid;
   gap: 10px 29px;
-  padding-top: 41px;
-  grid-template-columns: repeat(1, 77fr 284fr 284fr);
+  grid-template-columns: repeat(1,77fr 276fr 308fr);
   justify-content: center;
+  padding-top: 41px;
+  max-width: 880px;
+  margin: 0 auto;
 }
 
 @media only screen and (max-width: 768px) {

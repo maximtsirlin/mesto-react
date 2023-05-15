@@ -1,14 +1,42 @@
 import { useState, useEffect } from 'react';
 
 import Card from './Card.js';
-
+import api from './Api.js';
 
 function Main(props) {
   const { onEditAvatar, onEditProfile, onAddPlace, onCardClick } = props;
+
+
+
+  const [userName, setUserName] = useState('');
+  const [userDescription, setUserDescription] = useState('');
+  const [userAvatar, setUserAvatar] = useState('');
+
+  const [cards, setCards] = useState([]);
+
+
+  useEffect(() => {
+    api.getProfile()
+      .then(data => {
+      setUserName(data.name)
+      setUserDescription(data.about)
+      setUserAvatar(data.avatar)
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+
+    api.getCards()
+    .then((res) => {
+      setCards(res)
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+
+  },[])
+
   
-
-
-  const [cards] = useState([]);
 
   return (
     <main className="content">
@@ -16,7 +44,7 @@ function Main(props) {
       <section className="profile">
 
         <img
-          src="#"
+          src={userAvatar}
           alt="Фотография профиля"
           className="profile__image"
         />
@@ -30,14 +58,14 @@ function Main(props) {
 
         <div className="profile__item">
           <div className="profile__form">
-            <h1 className="profile__title">Жак-Ив Кусто</h1>
+            <h1 className="profile__title">{userName}</h1>
             <button
               className="profile__button-edit profile__icon"
               type="button"
               onClick={onEditProfile}
             ></button>
           </div>
-          <p className="profile__description">Исследователь океана</p>
+          <p className="profile__description">{userDescription}</p>
         </div>
         <button
           className="profile__add-button"
@@ -51,7 +79,7 @@ function Main(props) {
         className="elements"
         aria-label="elements"
       >
-        
+
         <ul className="cards">
           {cards.map((card) => {
             return (
