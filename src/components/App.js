@@ -18,7 +18,6 @@ function App() {
   const handleAddPlaceClick = () => setAddPlacePopupOpen(true); //кнопка добавения карточки
   const handleEditAvatarClick = () => setEditAvatarPopupOpen(true);
 
-
   const [selectedCard, setSelectedCard] = useState({});
 
   const closeAllPopups = () => {

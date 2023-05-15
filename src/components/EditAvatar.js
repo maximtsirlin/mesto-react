@@ -7,6 +7,8 @@ function EditAvatar(props) {
       onClose={props.onClose}
       title={'Обновить аватар'}
       name={'edit-avatar'}
+      buttonText={'Сохранить'}
+
     >
       <input
         id="addAvatar"
