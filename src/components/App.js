@@ -5,7 +5,7 @@ import Footer from './Footer';
 import EditProfie from './EditProfile';
 import EditAvatar from './EditAvatar';
 import AddPlace from './AddPlace';
-import { ImagePopup } from './ImagePopup';
+import ImagePopup from './ImagePopup';
 
 
 function App() {
@@ -18,20 +18,19 @@ function App() {
   const handleAddPlaceClick = () => setAddPlacePopupOpen(true); //кнопка добавения карточки
   const handleEditAvatarClick = () => setEditAvatarPopupOpen(true);
 
+
   const [selectedCard, setSelectedCard] = useState({});
 
   const closeAllPopups = () => {
     setEditProfilePopupOpen(false);
     setAddPlacePopupOpen(false);
     setEditAvatarPopupOpen(false);
+    setSelectedCard({});
   };
 
   const handleCardClick = (card) => {
     setSelectedCard(card);
-
   }
-
-
 
 
   return (
@@ -71,32 +70,10 @@ function App() {
             onClose={closeAllPopups}
           />
 
-          <ImagePopup 
-          card={selectedCard} onClose={closeAllPopups} 
+          <ImagePopup
+            card={selectedCard}
+            onClose={closeAllPopups}
           />
-
-
-
-          <main class="content">
-
-
-            <div id="app"></div>
-
-
-
-
-
-          </main>
-
-
-
-
-
-
-
-
-
-
 
 
         </div>
