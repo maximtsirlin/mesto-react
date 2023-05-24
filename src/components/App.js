@@ -2,7 +2,9 @@ import React, { useEffect, useState } from 'react';
 import Header from './Header';
 import Main from './Main';
 import Footer from './Footer';
-import EditProfie from './EditProfile';
+
+import EditProfilePopup from './EditProfilePopup';
+
 import EditAvatar from './EditAvatar';
 import AddPlace from './AddPlace';
 import ImagePopup from './ImagePopup';
@@ -12,7 +14,6 @@ import { CurrentUserContext } from '../contexts/CurrentUserContext.js';
 
 function App(props) {
 
-  const [firstName, setFirstName] = useState('');
 
   const [isEditProfilePopupOpen, setEditProfilePopupOpen] = useState(false);
   const [isAddPlacePopupOpen, setAddPlacePopupOpen] = useState(false);
@@ -23,6 +24,7 @@ function App(props) {
   const [selectedCard, setSelectedCard] = useState({});
   const [currentUser, setCurrentUser] = useState({}); //В компоненте App создайте переменную состояния currentUser и эффект при монтировании
   const [cards, setCards] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
 
   useEffect(() => {
@@ -38,19 +40,32 @@ function App(props) {
     setSelectedCard(card);
   }
 
-  function handleCardLike(card) {
-    // Снова проверяем, есть ли уже лайк на этой карточке
-    const isLiked = card.likes.some(i => i._id === currentUser._id);
-
-    // Отправляем запрос в API и получаем обновлённые данные карточки
-    api.changeLikeCardStatus(card._id, !isLiked).then((newCard) => {
-      setCards((state) => state.map((c) => c._id === card._id ? newCard : c));
-    });
+  const handleCardLike = (card) => {
+    const isLiked = card.likes.some(like => like._id === currentUser._id);
+    if (!isLiked) {
+      api
+      .putLike(card._id, !isLiked)
+      .then((newCard) => {
+        setCards((state) => state.map((c) => c._id === card._id ? newCard : c));
+    })      
+      .catch((err) => console.log(err));
+  } 
+  else {
+    api
+      .removeLike(card._id, !isLiked)
+      .then((newCard) => {
+        setCards((state) =>
+          state.map((c) => (c._id === card._id ? newCard : c))
+        );
+      })
+      .catch((err) => console.log(err));
+  }
   }
 
 
 
   const handleCardDelete = (card) => {
+    // setIsLoading(true);
     api
       .deleteCard(card._id)
       .then((newCard) => {
@@ -59,7 +74,9 @@ function App(props) {
         );
         setCards(newCards);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => console.log(err))
+      // .finally(() => setIsLoading(false));
+
   }
 
 
@@ -72,7 +89,20 @@ function App(props) {
   };
 
 
+  const handleUpdateUser = (info) => {
+    setIsLoading(true);
+  
+      api
+      .setUserInfo(info)
+      .then((newUser) => {
+        setCurrentUser(newUser)
+        closeAllPopups()
+    })
+    .catch((err) => console.log(err))
+    .finally(() => setIsLoading(false));
+  }
 
+  
 
   return (
 
@@ -92,7 +122,7 @@ function App(props) {
           onCardClick={handleCardClick}
           onCardLike={handleCardLike}
           onCardDelete={handleCardDelete}
-          currentUser={currentUser}
+          // currentUser={currentUser}
           cards={cards}
 
         />
@@ -101,9 +131,11 @@ function App(props) {
 
 
 
-        <EditProfie
+        <EditProfilePopup
           isOpen={isEditProfilePopupOpen}
           onClose={closeAllPopups}
+          onUpdateUser={handleUpdateUser}
+          isLoading={isLoading}
         />
 
         <AddPlace
