@@ -7,6 +7,7 @@ class Api {
       .then((result) => (this._myId = result._id));
   }
 
+
   _isResultOk(res) {
     if (res.ok) {
       return res.json();
@@ -14,6 +15,7 @@ class Api {
     return Promise.reject(`Ошибка: ${res.status}`);
   }
 
+  
   _request(url, options) {
     return fetch(url, options).then((res) => this._isResultOk(res));
   }
@@ -53,7 +55,13 @@ class Api {
   }
 
 
-
+  postCard({ name, link }) {
+    return this._request(`${this._baseUrl}/cards`, {
+      method: 'POST',
+      headers: this._headers,
+      body: JSON.stringify({ name: name, link: link }),
+    });
+  }
  
 
 
@@ -90,3 +98,4 @@ const api = new Api({
 });
 
 export default api;
+

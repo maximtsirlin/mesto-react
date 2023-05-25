@@ -3,13 +3,20 @@ import { CurrentUserContext } from '../contexts/CurrentUserContext.js';
 
 
 function Card({ card, onCardClick, onCardLike, onCardDelete }) {
-  const currentUser = useContext(CurrentUserContext)
+  const currentUser = useContext(CurrentUserContext) //использую хук useContext
+ 
+  // Определяем, являемся ли мы владельцем текущей карточки
   const isOwn = card.owner._id === currentUser._id;
+  // Далее в разметке используем переменную для условного рендеринга
+  const cardDeleteButtonClassName = (
+    `cards__delete ${isOwn ? 'cards__delete-button_active' : 'cards__delete'}`
+  );
 
   const isLiked = card.likes.some(i => i._id === currentUser._id);
   const cardLikeButtonClassName = ( 
-    `cards__button ${isLiked && 'cards__button-active'}` 
-  );;
+    `cards__button ${isLiked ? 'cards__button-active' : 'cards__button'}` 
+  );
+
 
   function handleClick() {
     onCardClick(card);
@@ -39,7 +46,7 @@ function Card({ card, onCardClick, onCardLike, onCardDelete }) {
           <h2 className="cards__description">{card.name}</h2>
           <div>
             <button
-              className="cards__button"
+              className={cardLikeButtonClassName}
               type="button"
               onClick={handleLikeClick}
             ></button>
@@ -47,14 +54,11 @@ function Card({ card, onCardClick, onCardLike, onCardDelete }) {
           </div>
 
           {isOwn && <button
-          className="card__delete-button card__delete-button_js"
+          className={cardDeleteButtonClassName}
           type="button"
           onClick={handleDeleteClick}
         ></button>} 
-
-        </div>
-
-     
+        </div>  
     </li>
   );
 }

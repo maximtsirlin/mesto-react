@@ -8,8 +8,7 @@ import { CurrentUserContext } from '../contexts/CurrentUserContext.js';
 
 function Main(props) {
   const { onEditAvatar, onEditProfile, onAddPlace, onCardClick, onCardLike, onCardDelete, cards } = props;
-  const currentUser = useContext(CurrentUserContext)
-
+  const currentUser = useContext(CurrentUserContext) //использую хук useContext
 
 
 
@@ -61,8 +60,8 @@ function Main(props) {
               <Card
                 key={card._id}
                 card={card}
-                onCardClick={onCardClick}
-                onCardLike={onCardLike}
+                onCardClick={onCardClick} 
+                onCardLike={onCardLike} //добавил пропс onCardLike
                 onCardDelete={onCardDelete}
               ></Card>
             );
@@ -73,7 +72,5 @@ function Main(props) {
     </main>
   );
 }
-
-
 
 export default Main;
