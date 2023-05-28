@@ -1,6 +1,3 @@
-
-
-
 import Card from './Card.js';
 import { useContext } from 'react';
 import { CurrentUserContext } from '../contexts/CurrentUserContext.js';
@@ -8,8 +5,7 @@ import { CurrentUserContext } from '../contexts/CurrentUserContext.js';
 
 function Main(props) {
   const { onEditAvatar, onEditProfile, onAddPlace, onCardClick, onCardLike, onCardDelete, cards } = props;
-  const currentUser = useContext(CurrentUserContext) //использую хук useContext
-
+  const currentUser = useContext(CurrentUserContext)
 
 
   return (
@@ -61,7 +57,7 @@ function Main(props) {
                 key={card._id}
                 card={card}
                 onCardClick={onCardClick} 
-                onCardLike={onCardLike} //добавил пропс onCardLike
+                onCardLike={onCardLike} 
                 onCardDelete={onCardDelete}
               ></Card>
             );

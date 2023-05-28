@@ -21,7 +21,6 @@ function EditAvatarPopup(props) {
   } 
 
 
-
   return (
     <PopupWithForm
       isOpen={isOpen}

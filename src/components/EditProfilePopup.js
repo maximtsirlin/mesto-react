@@ -4,12 +4,8 @@ import { CurrentUserContext } from '../contexts/CurrentUserContext.js';
 
 function EditProfilePopup(props) {
   const { isOpen, onClose, onUpdateUser, isLoading } = props;
-
-// Подписка на контекст
   const currentUser = useContext(CurrentUserContext);
 
-// После загрузки текущего пользователя из API
-// его данные будут использованы в управляемых компонентах.
   const [userName, setUserName] = useState('');
   const [userAbout, setUserAbout] = useState('');
 

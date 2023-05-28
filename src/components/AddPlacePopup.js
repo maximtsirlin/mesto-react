@@ -2,37 +2,35 @@ import { useState, useEffect } from 'react';
 import PopupWithForm from './PopupWithForm.js';
 
 function AddPlacePopup(props) {
-  
-    const {isOpen, onClose, onAddPlace, isLoading} = props;  
-
-    const [cardName, setCardName] = useState(''); 
-    const [cardLink, setCardLink] = useState('');
+  const { isOpen, onClose, onAddPlace, isLoading } = props;
+  const [cardName, setCardName] = useState('');
+  const [cardLink, setCardLink] = useState('');
 
 
-    useEffect(() => {
-      if (!isOpen) {
-        setCardName('')
-        setCardLink('')
-      }
+  useEffect(() => {
+    if (!isOpen) {
+      setCardName('')
+      setCardLink('')
+    }
   }, [isOpen])
-  
-    function handleSubmit(e) {
-      e.preventDefault();
-      onAddPlace({
-        name: cardName,
-        link: cardLink
-      })
-    } 
-  
-    function handleCardName(e) {
-      setCardName(e.target.value);
-    }
-  
-    function handleCardLink(e) {
-      setCardLink(e.target.value);
-    }
 
-    return (
+  function handleSubmit(e) {
+    e.preventDefault();
+    onAddPlace({
+      name: cardName,
+      link: cardLink
+    })
+  }
+
+  function handleCardName(e) {
+    setCardName(e.target.value);
+  }
+
+  function handleCardLink(e) {
+    setCardLink(e.target.value);
+  }
+
+  return (
     <PopupWithForm
       isOpen={isOpen}
       onClose={onClose}

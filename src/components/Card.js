@@ -1,13 +1,9 @@
 import { useContext } from 'react'
 import { CurrentUserContext } from '../contexts/CurrentUserContext.js';
 
-
 function Card({ card, onCardClick, onCardLike, onCardDelete }) {
-  const currentUser = useContext(CurrentUserContext) //использую хук useContext
-
-  // Определяем, являемся ли мы владельцем текущей карточки
+  const currentUser = useContext(CurrentUserContext)
   const isOwn = card.owner._id === currentUser._id;
-  // Далее в разметке используем переменную для условного рендеринга
   const cardDeleteButtonClassName = (
     `cards__delete ${isOwn ? 'cards__delete-button_active' : 'cards__delete'}`
   );
@@ -54,8 +50,6 @@ function Card({ card, onCardClick, onCardLike, onCardDelete }) {
           ></button>
           <p className="cards__like-counter">{card.likes.length}</p>
         </div>
-
-
       </div>
     </li>
   );
