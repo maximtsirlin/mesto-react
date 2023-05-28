@@ -1,21 +1,24 @@
-import PopupWithForm from './PopupWithForm';
-import { useState, useEffect } from 'react';
-import { useContext } from 'react'
+import PopupWithForm from './PopupWithForm.js';
+import { useState, useEffect, useContext } from 'react';
 import { CurrentUserContext } from '../contexts/CurrentUserContext.js';
 
 function EditProfilePopup(props) {
-  const { isOpen, onClose, onUpdateUser, isLoading } = props
+  const { isOpen, onClose, onUpdateUser, isLoading } = props;
 
-  const currentUser = useContext(CurrentUserContext)
+// Подписка на контекст
+  const currentUser = useContext(CurrentUserContext);
 
-  const [userName, setUserName] = useState('')
-  const [userAbout, setUserAbout] = useState('')
+// После загрузки текущего пользователя из API
+// его данные будут использованы в управляемых компонентах.
+  const [userName, setUserName] = useState('');
+  const [userAbout, setUserAbout] = useState('');
 
   useEffect(() => {
-    setUserName(currentUser.name);
-    setUserAbout(currentUser.about);
-  }, [currentUser, isOpen]);
-
+    if (currentUser) {
+      setUserName(currentUser.name || '');
+      setUserAbout(currentUser.about || '');
+    }
+  }, [currentUser]);
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -44,21 +47,19 @@ function EditProfilePopup(props) {
       buttonText="Cохранить"
       loadingText={'Сохранение...'}
     >
-
       <div className="form__section">
         <input
           id="input_element-user"
           className="form__input form__input_name"
           type="text"
           name="name"
-          value={userName || ''}
+          value={userName}
           placeholder="Имя пользователя"
           minLength="2"
           maxLength="40"
           autoComplete="off"
           onChange={handleUserName}
           required
-        // defaultValue=""
         />
         <span className="form__input-error form__input-error_active"></span>
       </div>
@@ -69,20 +70,17 @@ function EditProfilePopup(props) {
           className="form__input form__input_job"
           type="text"
           name="job"
-          value={userAbout || ''}
+          value={userAbout}
           placeholder="О себе"
           minLength="2"
           maxLength="200"
           autoComplete="off"
           onChange={handleUserAbout}
           required
-        // defaultValue="" 
         />
         <span className="form__input-error form__input-error_active"></span>
       </div>
-      
     </PopupWithForm>
-
   );
 }
 

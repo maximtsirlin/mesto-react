@@ -3,19 +3,22 @@ class Api {
     this._baseUrl = url;
     this._headers = headers;
     fetch(this._baseUrl + "users/me", { headers: this._headers })
-      .then((res) => res.json())
+      .then((res) => this._isResultOk(res))
       .then((result) => (this._myId = result._id));
   }
 
-
   _isResultOk(res) {
     if (res.ok) {
-      return res.json();
+      const contentType = res.headers.get('content-type');
+      if (contentType && contentType.includes('application/json')) {
+        return res.json();
+      } else {
+        return res.text();
+      }
     }
     return Promise.reject(`Ошибка: ${res.status}`);
   }
 
-  
   _request(url, options) {
     return fetch(url, options).then((res) => this._isResultOk(res));
   }
@@ -54,16 +57,13 @@ class Api {
     }).then((res) => this._isResultOk(res));
   }
 
-
   postCard({ name, link }) {
     return this._request(`${this._baseUrl}/cards`, {
       method: 'POST',
       headers: this._headers,
-      body: JSON.stringify({ name: name, link: link }),
+      body: JSON.stringify({ name, link }),
     });
   }
- 
-
 
   deleteCard(card) {
     return this._request(`${this._baseUrl}/cards/${card}`, {
@@ -85,6 +85,14 @@ class Api {
       headers: this._headers,
     });
   }
+
+  changeAvatar(avatar) {
+    return this._request(`${this._baseUrl}users/me/avatar`, {
+      method: 'PATCH',
+      headers: this._headers,
+      body: JSON.stringify(avatar)
+    });
+  }
 }
 
 
@@ -98,4 +106,3 @@ const api = new Api({
 });
 
 export default api;
-

@@ -19,7 +19,7 @@ function App(props) {
 
   const [currentUser, setCurrentUser] = useState({}); //1.3 Внутри компонента App используем хук useState для создания переменной состояния currentUser. Изначально устанавливаем значение null.
 
-  const [isEditProfilePopupOpen, setEditProfilePopupOpen] = useState(false);
+  const [isEditProfilePopupOpen, setEditProfilePopupOpen] = useState(false); //добавляю useState для редактирования профиля
   const [isAddPlacePopupOpen, setAddPlacePopupOpen] = useState(false);
   const [isEditAvatarPopupOpen, setEditAvatarPopupOpen] = useState(false);
   const [isFullImagePopupOpen, setFullImagePopupOpen] = useState(false);
@@ -39,14 +39,15 @@ function App(props) {
 //вызываем асинхронную функцию fetchUserInfo, которая получает информацию 
 //о пользователе через api.getUserInfo и обновляет состояние currentUser с помощью setCurrentUser.
 
-  useEffect(() => {
-    Promise.all([api.getUserInfo(), api.getInitialCards()])
-      .then(([userInfo, initialCards]) => {
-        setCurrentUser(userInfo)
-        setCards(initialCards);
-      })
-      .catch((err) => console.log(err));
+useEffect(() => {
+  Promise.all([api.getUserInfo(), api.getInitialCards()])
+    .then(([userInfo, initialCards]) => {
+      setCurrentUser(userInfo)
+      setCards(initialCards);
+    })
+    .catch((err) => console.log(err));
   }, [])
+
 
 
   //Также добавьте в Card обработчик клика handleLikeClick и вызовите из него onCardLike
@@ -100,14 +101,14 @@ function App(props) {
 
   const handleUpdateUser = (info) => {
     setIsLoading(true);
-    api
+      api
       .setUserInfo(info)
       .then((newUser) => {
         setCurrentUser(newUser)
         closeAllPopups()
-      })
-      .catch((err) => console.log(err))
-      .finally(() => setIsLoading(false));
+    })
+    .catch((err) => console.log(err))
+    .finally(() => setIsLoading(false));
   }
 
 
@@ -142,8 +143,10 @@ function App(props) {
   }
 
 
+
+
   const closeAllPopups = () => {
-    setEditProfilePopupOpen(false);
+    setEditProfilePopupOpen(false); // + 
     setAddPlacePopupOpen(false);
     setEditAvatarPopupOpen(false);
     setFullImagePopupOpen(false);

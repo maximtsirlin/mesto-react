@@ -1,3 +1,5 @@
+import React from 'react';
+
 function PopupWithForm(props) {
     const { title, name, children, isOpen, onClose, onSubmit, buttonText, isLoading } = props;
     return (
@@ -22,7 +24,7 @@ function PopupWithForm(props) {
             <button
               className={`form__save form__save_${name} .form__save_inactive`}
               type="submit"
-              disabled
+              // disabled
             >
              {isLoading ? 'Сохранение...' : buttonText}
 
